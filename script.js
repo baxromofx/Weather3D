@@ -1,124 +1,76 @@
 const API_KEY = "d1f1bb82f1326f714dabb1586699c084";
 
-/* ---------------- TIME ---------------- */
-function updateTime(){
-    const now = new Date();
+window.onload = function () {
 
-    document.getElementById("time").innerHTML =
-        "📅 " + now.toLocaleDateString("ru-RU") +
-        "<br>🕒 " + now.toLocaleTimeString("ru-RU");
-}
-setInterval(updateTime,1000);
-updateTime();
+    function updateTime() {
+        const now = new Date();
 
-/* ---------------- WEATHER ---------------- */
-async function getWeather(lat, lon){
+        const time = document.getElementById("time");
+        if (time) {
+            time.innerHTML =
+                "📅 " + now.toLocaleDateString("ru-RU") +
+                "<br>🕒 " + now.toLocaleTimeString("ru-RU");
+        }
+    }
 
-    const url = https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=ru;
+    setInterval(updateTime, 1000);
+    updateTime();
 
-    const res = await fetch(url);
-    const data = await res.json();
+    async function getWeather(lat, lon) {
+        try {
+            const response = await fetch(
+                https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=ru
+            );
 
-    document.getElementById("city").textContent = data.name;
-    document.getElementById("temp").textContent = Math.round(data.main.temp) + "°C";
-    document.getElementById("weather").textContent = data.weather[0].description;
+            const data = await response.json();
 
-    document.getElementById("wind").textContent = "💨 " + data.wind.speed + " м/с";
-    document.getElementById("hum").textContent = "💧 " + data.main.humidity + "%";
+            document.getElementById("city").textContent = data.name;
+            document.getElementById("temp").textContent = Math.round(data.main.temp) + "°C";
+            document.getElementById("weather").textContent =
+                data.weather[0].description +
+                " | 💨 " + data.wind.speed + " м/с" +
+                " | 💧 " + data.main.humidity + "%";
+const weather = data.weather[0].main;
 
-    // иконка
-    const main = data.weather[0].main;
-    let icon = "☀️";
+let icon = "☀️";
 
-    if(main === "Clouds") icon = "☁️";
-    else if(main === "Rain") icon = "🌧️";
-    else if(main === "Snow") icon = "❄️";
-    else if(main === "Thunderstorm") icon = "⛈️";
-    else if(main === "Mist" || main === "Fog") icon = "🌫️";
-
-    document.getElementById("icon").textContent = icon;
-}
-
-/* ---------------- GEO ---------------- */
-function loadWeather(){
-    navigator.geolocation.getCurrentPosition(
-        pos => getWeather(pos.coords.latitude, pos.coords.longitude),
-        err => alert("Разреши геолокацию")
-    );
-}
-
-document.getElementById("refresh").onclick = loadWeather;
-
-loadWeather();
-/* ===== 3D ГЛОБУС ===== */
-
-const scene = new THREE.Scene();
-
-const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-);
-
-const renderer = new THREE.WebGLRenderer({ alpha: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-
-document.getElementById("scene").appendChild(renderer.domElement);
-
-/* 🌍 глобус */
-const globe = new THREE.Mesh(
-    new THREE.SphereGeometry(2, 32, 32),
-    new THREE.MeshBasicMaterial({
-        color: 0x2f80ff,
-        wireframe: true
-    })
-);
-
-scene.add(globe);
-
-camera.position.z = 6;
-
-/* анимация */
-function animate(){
-    requestAnimationFrame(animate);
-
-    globe.rotation.y += 0.003;
-
-    renderer.render(scene, camera);
+switch (weather) {
+    case "Clouds":
+        icon = "☁️";
+        break;
+    case "Rain":
+        icon = "🌧";
+        break;
+    case "Snow":
+        icon = "❄️";
+        break;
+    case "Thunderstorm":
+        icon = "⛈";
+        break;
+    case "Drizzle":
+        icon = "🌦";
+        break;
+    case "Mist":
+    case "Fog":
+        icon = "🌫";
+        break;
 }
 
-animate();
-/* ---------------- 3D BACKGROUND ---------------- */
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+document.getElementById("weatherIcon").textContent = icon;
+        } catch (e) {
+            alert("Не удалось загрузить погоду.");
+            console.log(e);
+        }
+    }
 
-const renderer = new THREE.WebGLRenderer({alpha:true});
-renderer.setSize(window.innerWidth, window.innerHeight);
+    function loadWeather() {
+        navigator.geolocation.getCurrentPosition(
+            pos => getWeather(pos.coords.latitude, pos.coords.longitude),
+            () => alert("Разрешите доступ к геолокации.")
+        );
+    }
 
-document.getElementById("scene").appendChild(renderer.domElement);
+    document.getElementById("refresh").onclick = loadWeather;
 
-/* Солнце */
-const sunGeo = new THREE.SphereGeometry(1.5,32,32);
-const sunMat = new THREE.MeshBasicMaterial({color:0xffcc00});
-const sun = new THREE.Mesh(sunGeo, sunMat);
-scene.add(sun);
-
-camera.position.z = 5;
-
-/* Анимация */
-function animate(){
-    requestAnimationFrame(animate);
-
-    sun.rotation.y += 0.01;
-
-    renderer.render(scene, camera);
-}
-animate();
-
-/* resize */
-window.addEventListener("resize", ()=>{
-    camera.aspect = window.innerWidth/window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
+    loadWeather();
+};
