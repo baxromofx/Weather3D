@@ -93,3 +93,20 @@ button:hover{
 transform:scale(1.08);
 background:#0099dd;
 }
+.icon{
+    font-size:80px;
+    animation:float 3s ease-in-out infinite;
+    margin-bottom:15px;
+}
+
+@keyframes float{
+    0%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-12px);
+    }
+    100%{
+        transform:translateY(0);
+    }
+}
