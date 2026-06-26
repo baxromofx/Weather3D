@@ -2,112 +2,106 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,sans-serif;
+font-family:Arial, sans-serif;
 }
 
 body{
 height:100vh;
+overflow:hidden;
 display:flex;
 justify-content:center;
 align-items:center;
-background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#00c6ff);
-background-size:400% 400%;
-animation:bg 12s ease infinite;
-overflow:hidden;
+background:#000;
 }
 
-@keyframes bg{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
+/* 3D фон контейнер */
+#scene{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
 }
 
+/* Карточка */
 .card{
 width:340px;
-padding:30px;
+padding:25px;
 border-radius:25px;
-background:rgba(255,255,255,.15);
+background:rgba(255,255,255,0.12);
 backdrop-filter:blur(20px);
-box-shadow:0 0 30px rgba(255,255,255,.25);
-text-align:center;
 color:white;
-animation:show 1s ease;
+text-align:center;
+box-shadow:0 0 30px rgba(0,0,0,0.5);
+animation:fadeIn 1s ease;
 }
 
-@keyframes show{
-from{
-opacity:0;
-transform:translateY(30px);
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
 }
-to{
-opacity:1;
-transform:translateY(0);
+
+#icon{
+font-size:70px;
+margin-bottom:10px;
+animation:float 3s infinite ease-in-out;
 }
+
+@keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+100%{transform:translateY(0);}
 }
 
 h1{
-font-size:32px;
-margin-bottom:20px;
-}
-
-.temp{
-font-size:60px;
-font-weight:bold;
-margin:15px 0;
-}
-
-#city{
-font-size:26px;
+font-size:28px;
 margin-bottom:10px;
 }
 
-#weather{
-font-size:18px;
-opacity:.9;
+.temp{
+font-size:50px;
+font-weight:bold;
+margin:10px 0;
+}
+
+.city{
+font-size:20px;
+opacity:0.9;
+}
+
+.desc{
+margin-top:5px;
+font-size:16px;
+opacity:0.8;
 }
 
 .time{
-margin-top:20px;
-font-size:18px;
+margin-top:15px;
+font-size:14px;
+opacity:0.8;
 }
 
-.buttons{
-margin-top:25px;
+.info{
 display:flex;
-justify-content:center;
-gap:15px;
+justify-content:space-between;
+margin-top:15px;
+font-size:14px;
 }
 
 button{
-padding:12px 22px;
+margin-top:20px;
+padding:12px 20px;
 border:none;
 border-radius:12px;
 background:#00bfff;
 color:white;
 font-size:16px;
 cursor:pointer;
-transition:.3s;
+transition:0.3s;
 }
 
 button:hover{
-transform:scale(1.08);
+transform:scale(1.05);
 background:#0099dd;
 }
-.icon{
-    font-size:80px;
-    animation:float 3s ease-in-out infinite;
-    margin-bottom:15px;
-}
-
-@keyframes float{
-    0%{
-        transform:translateY(0);
-    }
-    50%{
-        transform:translateY(-12px);
-    }
-    100%{
-        transform:translateY(0);
-    } 
-}
-
