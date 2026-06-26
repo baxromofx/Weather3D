@@ -30,7 +30,33 @@ window.onload = function () {
                 data.weather[0].description +
                 " | 💨 " + data.wind.speed + " м/с" +
                 " | 💧 " + data.main.humidity + "%";
+const weather = data.weather[0].main;
 
+let icon = "☀️";
+
+switch (weather) {
+    case "Clouds":
+        icon = "☁️";
+        break;
+    case "Rain":
+        icon = "🌧️";
+        break;
+    case "Snow":
+        icon = "❄️";
+        break;
+    case "Thunderstorm":
+        icon = "⛈️";
+        break;
+    case "Drizzle":
+        icon = "🌦️";
+        break;
+    case "Mist":
+    case "Fog":
+        icon = "🌫️";
+        break;
+}
+
+document.getElementById("weatherIcon").textContent = icon;
         } catch (e) {
             alert("Не удалось загрузить погоду.");
             console.log(e);
