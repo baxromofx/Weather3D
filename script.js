@@ -62,7 +62,29 @@ document.getElementById("weatherIcon").textContent = icon;
             console.log(e);
         }
     }
+async function getWeatherByCity(city) {
+    try {
+        const response = await fetch(
+            https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=ru
+        );
 
+        const data = await response.json();
+
+        if (data.cod != 200) {
+            alert("Город не найден!");
+            return;
+        }
+
+        document.getElementById("city").textContent = data.name;
+        document.getElementById("temp").textContent = Math.round(data.main.temp) + "°C";
+        document.getElementById("weather").textContent =
+            data.weather[0].description +
+            " | 💨 " + data.wind.speed + " м/с" +
+            " | 💧 " + data.main.humidity + "%";
+    } catch (e) {
+        alert("Ошибка при поиске города.");
+    }
+}
     function loadWeather() {
         navigator.geolocation.getCurrentPosition(
             pos => getWeather(pos.coords.latitude, pos.coords.longitude),
@@ -73,4 +95,12 @@ document.getElementById("weatherIcon").textContent = icon;
     document.getElementById("refresh").onclick = loadWeather;
 
     loadWeather();
+    document.getElementById("searchBtn").onclick = function () {
+
+    const city = document.getElementById("searchCity").value.trim();
+
+    if (city !== "") {
+        getWeatherByCity(city);
+    }
+};
 };
