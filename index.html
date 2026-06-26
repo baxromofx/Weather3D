@@ -1,45 +1,48 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Weather 3D</title>
+<title>Weather 3D Pro</title>
 
 <link rel="stylesheet" href="style.css">
+
+<!-- Three.js (3D фон) -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 
 </head>
 
 <body>
 
-<div id="particles"></div>
+<!-- 3D фон -->
+<div id="scene"></div>
 
+<!-- Основная карточка -->
 <div class="card">
 
-<div class="icon" id="weatherIcon">☀️</div>
-  
-<h1>Weather 3D</h1>
+    <div id="icon">☀️</div>
 
-<div class="temp" id="temp">--°C</div>
+    <h1>Weather 3D</h1>
 
-<h2 id="city">Мой город</h2>
+    <div class="temp" id="temp">--°C</div>
 
-<p id="weather">Ожидание погоды...</p>
+    <div class="city" id="city">Загрузка...</div>
 
-<div class="time" id="time"></div>
+    <div class="desc" id="weather">Ожидание данных...</div>
 
-<div class="buttons">
+    <div class="time" id="time"></div>
 
-<button id="refresh">
-🔄 Обновить
-</button>
+    <div class="info">
+        <span id="wind">💨 --</span>
+        <span id="hum">💧 --</span>
+    </div>
 
-<button id="forecast">
-📅 Прогноз
-</button>
+    <div class="forecast">
+        <h3>📅 Прогноз (скоро)</h3>
+    </div>
 
-</div>
+    <button id="refresh">🔄 Обновить</button>
 
 </div>
 
