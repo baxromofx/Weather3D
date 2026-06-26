@@ -110,3 +110,17 @@ background:#0099dd;
         transform:translateY(0);
     }
 }
+input{
+width:100%;
+padding:12px;
+margin-top:20px;
+border:none;
+border-radius:12px;
+font-size:16px;
+outline:none;
+}
+
+#searchBtn{
+width:100%;
+margin-top:10px;
+}
