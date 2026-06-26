@@ -1,4 +1,4 @@
-const API_KEY = "d1f1bb82f1326f714dabb1586699c084";
+const API_KEY = "d1f1bb82f1326f714dabb1586699c084"; 
 
 window.onload = function () {
 
